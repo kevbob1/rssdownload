@@ -2,6 +2,7 @@ package main
 
 
 import (
+//    "drule.org/rssdownload"
         "fmt"
         rss "github.com/jteeuwen/go-pkg-rss"
         "os"
@@ -14,12 +15,13 @@ const URL string = "http://feeds.twit.tv/sn_video_large"
 func main() {
 
     err := os.Mkdir("downloads", 755)
+    if err != nil && os.IsExist(err) {
+        fmt.Println(err)
+    }
 
-    fmt.Println(err)
-    return
 
-    var timeout int = 5
-    fmt.Println("going to download URL ", URL)
+    timeout := 5
+    fmt.Println("checking URL ", URL)
 
     feed := rss.New(timeout, true, chanHandler, itemHandler)
 

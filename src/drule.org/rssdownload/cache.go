@@ -9,7 +9,12 @@ import (
 
 type Cache struct {
     filename string
-    seenfiles map[string]string
+    seenfiles map[string][]string
+}
+
+func (c *Cache) JsonOut() (string) {
+    b, _ := json.Marshal(c.seenfiles)
+    return string(b)
 }
 
 
@@ -24,7 +29,10 @@ func NewCache(filename string) (*Cache) {
             fmt.Printf("error reading %s\n", filename)
             return nil
         }
-    } 
+    } else {
+        c.seenfiles = map[string][]string{}
+    }
+
  
     return &c
 }
