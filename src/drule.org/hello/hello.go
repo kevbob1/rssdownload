@@ -12,20 +12,35 @@ func PrintLn(msg string) {
     fmt.Println(msg)
 }
 
-func CreateMessage(name string, greeting ...string) (message string, alternate string) {
+func CreateMessage(name string, greeting string) (message string) {
     fmt.Println(len(greeting))
-    message = greeting[1] + " " + name
-    alternate =  "HEY! " + name
+    message = greeting + " " + GetPrefix(name) + name
     return
 }
 
+func GetPrefix(name string) (prefix string) {
+    switch {
+        case name == "Bob": prefix = "Mr "
+        case name == "Joe", name == "Amy", len(name) == 10: prefix = "Dr "
+        case name == "Mary": prefix = "Mrs "
+        default: prefix = "Dude "
+    }
+
+    return
+}
+
+
 func Greet(sal Salutation, do func(string)) {
-    message, alternate := CreateMessage(sal.name, sal.greeting, "Yo!")
+    message := CreateMessage(sal.name, sal.greeting)
     do(message)
-    do(alternate)
 }
 
 func main() {
-    var s = Salutation{"Bob", "hello"}
+    var s = Salutation{"Amyxxxxxxx", "hello"}
     Greet(s, PrintLn)
+    a := []int{3,2,1,5,6,7,8,8}
+    for _, aa := range a {
+        fmt.Println(aa)
+    }
+    
 }
