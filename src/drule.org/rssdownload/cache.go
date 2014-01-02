@@ -19,7 +19,7 @@ func (c *Cache) JsonOut() (string) {
 
 func (c *Cache) cacheFor(name string) ([]string) {
     if v, e := c.seenfiles[name]; e {
-       return v 
+       return v
     } else {
        v := make([]string, 0, 10)
        c.seenfiles[name] = v
@@ -30,7 +30,7 @@ func (c *Cache) cacheFor(name string) ([]string) {
 /**
  * check if a value is in the slice of a map key
  */
-func (c *Cache) inCache(name string, value string ) (bool) {
+func (c *Cache) InCache(name string, value string ) (bool) {
     if s, e := c.seenfiles[name]; e {
         for _,v := range s {
             if v == value {
@@ -46,15 +46,15 @@ func (c *Cache) inCache(name string, value string ) (bool) {
 /**
  *
  */
-func (c *Cache) appendCache(name string, value string) {
-    if c.inCache(name, value) {
+func (c *Cache) AppendCache(name string, value string) {
+    if c.InCache(name, value) {
         return
     }
-    
+
     s, e := c.seenfiles[name]
     if e {
         // check if we need to resize slice
-        if cap(s) == len(s) { 
+        if cap(s) == len(s) {
             old_cap := cap(s)
             new_s := make([]string, old_cap+1, old_cap + 10)
             copied := copy(new_s, s)
@@ -94,9 +94,10 @@ func (c *Cache) Save() {
 func NewCache(filename string) (*Cache) {
     f, err := os.Open(filename)
     c := Cache{filename:filename}
-    if os.IsExist(err) {
+    if err == nil {
+        defer f.Close()
         // read file
-        dec := json.NewDecoder(f)        
+        dec := json.NewDecoder(f)
         err = dec.Decode(&c.seenfiles)
         if err != nil {
             fmt.Printf("error reading %s\n", filename)
@@ -106,6 +107,5 @@ func NewCache(filename string) (*Cache) {
         c.seenfiles = make(map[string][]string)
     }
 
- 
     return &c
 }
