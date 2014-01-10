@@ -1,4 +1,4 @@
-download
+RSS download
 ===========
 
 RSS attachment downloader written in Go
@@ -6,10 +6,10 @@ RSS attachment downloader written in Go
 
 ## Configuration
 
-*create a config file 'rssdownload.conf'  put it in the current directory. This file contains a list of atom/rss feed urls.  One per line.
+* create a config file 'rssdownload.conf'  put it in the current directory. This file contains a list of atom/rss feed urls.  One per line.
 
 
-*create a /download directory use to store the cache and output files.
+* create a /download directory use to store the cache and output files.
 
 ## Build
 
